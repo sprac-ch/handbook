@@ -11,7 +11,7 @@ description: "Your route into Swiss military cyber: SPARC, recruit school, the C
 Four stages, from your first online course to a militia cyber unit. Find where you stand today, what to do next and by when.
 
 - [Find my situation ![](assets/icons/arrow-down.svg)](#where-are-you-now)
-- [Open the glossary ![](assets/icons/arrow-right.svg)](#)
+- [Open the glossary ![](assets/icons/arrow-right.svg)](/glossary/)
 
 ## The route
 
@@ -265,4 +265,4 @@ Source: sparc-cyberdefence.ch · vtg.admin.ch · armee.ch · Last verified 31 Oc
 Free and online. Everything after builds on it.
 
 - [Read about SPARC ![](assets/icons/arrow-right.svg)](/sparc/)
-- [Open the glossary](#)
+- [Open the glossary](/glossary/)

@@ -56,6 +56,7 @@ Pages use a trailing slash:
 | `/cylg/`           | Cyber Lehrgang            |
 | `/cybat42/`        | Cyber Bataillon 42        |
 | `/path/`           | Path                      |
+| `/glossary/`       | Glossary                  |
 | `/legal-notice/`   | Legal notice              |
 | `/privacy-policy/` | Privacy policy            |
 | anything else      | Not found                 |
@@ -107,5 +108,5 @@ Security contact details are in `public/.well-known/security.txt` (RFC 9116).
 
 - sprac.ch does not serve the site yet and its HTTPS certificate is self-signed.
 - The "Open an issue" button points to `#` until an issue tracker is set up (`ISSUE_URL` in `src/config/links.ts`).
-- The full-site navbar (Programs, Path, FAQ, Glossary) and the extra footer links are not built yet, because those pages do not exist yet.
+- The full-site navbar (Programs, Path, FAQ) and the extra footer links are not built yet, because those pages do not exist yet.
 - Romansh text and the legal texts in German, French, Italian and Romansh still need review by native speakers.

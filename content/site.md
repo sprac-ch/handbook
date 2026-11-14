@@ -23,7 +23,7 @@ logo: assets/logos/sparc-community-patch-256.png
 - [Homepage](/)
 - Programs
 - [Path](/path/)
-- [Glossary](#)
+- [Glossary](/glossary/)
 - [Wiki ![](assets/icons/arrow-up-right.svg)](https://wiki.sprac.ch)
 
 ### Programs

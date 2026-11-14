@@ -10,6 +10,7 @@ All text of the site, and the paths of the icons and logos it shows, live in Mar
 | `content/cylg.md`             | Cyber Lehrgang page (`/cylg/`)                                     |
 | `content/cybat42.md`          | Cyber Bataillon 42 page (`/cybat42/`)                              |
 | `content/path.md`             | Path page (`/path/`)                                               |
+| `content/glossary.md`         | Glossary (`/glossary/`)                                            |
 | `content/legal-notice.md`     | Legal notice (`/legal-notice/`)                                    |
 | `content/privacy-policy.md`   | Privacy policy (`/privacy-policy/`)                                |
 | `content/not-found.md`        | The 404 page                                                       |
@@ -110,6 +111,13 @@ Details:
    - an optional fourth `#####` box with a sentence and a list of topics (shown as grey badges).
 4. `## Who to ask`: an intro, a `Source:` line and a table `What for | Shown as | Icon | Link`.
 5. `## Ready?`: one `###` card with a sentence and a list of two links (yellow, then outlined).
+
+### `glossary.md`
+
+1. `# Title`: the headline, the lead paragraph and a list of three labels in this order: `Search: placeholder` (the label above the search field and the hint inside it), `No results: text` (shown when the search finds nothing) and `Index: text` (the screen reader name of the A to Z row).
+2. `## Terms`: a table `Term | Full name | Definition`, one row per term. Leave the full name empty for terms that are not abbreviations. Every term must start with a letter from A to Z.
+
+The letter groups are made from the first letter of each term, so you never write them yourself. Inside a group the terms keep the order of the table. Letters without terms are greyed out in the A to Z row. Every term can be linked to by its name: `[CyLG](/glossary/#cylg)`.
 
 ### `home.md`
 
