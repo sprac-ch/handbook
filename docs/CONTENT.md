@@ -114,10 +114,10 @@ Details:
 
 ### `glossary.md`
 
-1. `# Title`: the headline, the lead paragraph and a list of three labels in this order: `Search: placeholder` (the label above the search field and the hint inside it), `No results: text` (shown when the search finds nothing) and `Index: text` (the screen reader name of the A to Z row).
+1. `# Title`: the headline, the lead paragraph and a list of three labels in this order: `Search: placeholder` (the label above the search field and the hint inside it), `No results: text` (shown when the search finds nothing) and `Index: text` (the screen reader name of the A to Z filter).
 2. `## Terms`: a table `Term | Full name | Definition`, one row per term. Leave the full name empty for terms that are not abbreviations. Every term must start with a letter from A to Z.
 
-The letter groups are made from the first letter of each term, so you never write them yourself. Inside a group the terms keep the order of the table. Letters without terms are greyed out in the A to Z row. Every term can be linked to by its name: `[CyLG](/glossary/#cylg)`.
+The letter groups are made from the first letter of each term, so you never write them yourself. Inside a group the terms keep the order of the table. The search looks at the term and its full name, not at the definition. A letter in the A to Z row shows only the terms that start with it; letters without terms are greyed out. Every term can be linked to by its name: `[CyLG](/glossary/#cylg)`.
 
 ### `home.md`
 

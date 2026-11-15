@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Inline } from '@/components/content/Inline';
 import { GlossaryEntry } from '@/components/glossary/GlossaryEntry';
 import { GlossaryLetter } from '@/components/glossary/GlossaryLetter';
@@ -9,56 +9,26 @@ import { fileUrl } from '@/config/links';
 import { ALPHABET, getGlossary, type GlossaryGroup } from '@/content/glossary';
 import { getSite } from '@/content/site';
 
-/** A group counts as "in view" once its heading has scrolled up to just under the sticky navbar. */
-const SPY_OFFSET = 120;
-
-function filterGroups(groups: GlossaryGroup[], query: string): GlossaryGroup[] {
+/** Groups with only the terms whose name or full name contains the query. Definitions are not searched. */
+function searchGroups(groups: GlossaryGroup[], query: string): GlossaryGroup[] {
     const needle = query.trim().toLowerCase();
     if (!needle) return groups;
     return groups
-        .map((group) => ({ ...group, terms: group.terms.filter((entry) => [entry.term, entry.fullName ?? '', entry.definition].some((text) => text.toLowerCase().includes(needle))) }))
+        .map((group) => ({ ...group, terms: group.terms.filter((entry) => [entry.term, entry.fullName ?? ''].some((text) => text.toLowerCase().includes(needle))) }))
         .filter((group) => group.terms.length > 0);
 }
 
-/** The letter of the last group whose heading has passed the top of the screen. */
-function useActiveLetter(letters: string[]): string | undefined {
-    const [active, setActive] = useState(letters[0]);
-
-    useEffect(() => {
-        let frame = 0;
-        const update = () => {
-            frame = 0;
-            const passed = letters.filter((letter) => {
-                const top = document.getElementById(`letter-${letter.toLowerCase()}`)?.getBoundingClientRect().top;
-                return top !== undefined && top <= SPY_OFFSET;
-            });
-            setActive(passed.at(-1) ?? letters[0]);
-        };
-        const onScroll = () => {
-            if (!frame) frame = requestAnimationFrame(update);
-        };
-        onScroll();
-        window.addEventListener('scroll', onScroll, { passive: true });
-        window.addEventListener('resize', onScroll);
-        return () => {
-            cancelAnimationFrame(frame);
-            window.removeEventListener('scroll', onScroll);
-            window.removeEventListener('resize', onScroll);
-        };
-    }, [letters]);
-
-    return letters.includes(active ?? '') ? active : letters[0];
-}
-
-/** Glossary: search, A to Z index and every abbreviation explained once. Desktop 1440, iPad 834, iPhone 393. Content: content/glossary.md. */
+/** Glossary: search, A to Z filter and every abbreviation explained once. Desktop 1440, iPad 834, iPhone 393. Content: content/glossary.md. */
 export function Glossary() {
     const { labels } = getSite();
     const { title, lead, search, indexLabel, groups } = getGlossary();
     const [query, setQuery] = useState('');
+    // The letter picked in the A to Z row; none at first. Picking another replaces it, picking it again clears it.
+    const [letter, setLetter] = useState<string | null>(null);
 
-    const visible = useMemo(() => filterGroups(groups, query), [groups, query]);
-    const letters = useMemo(() => visible.map((group) => group.letter), [visible]);
-    const active = useActiveLetter(letters);
+    const matches = useMemo(() => searchGroups(groups, query), [groups, query]);
+    const available = useMemo(() => new Set(matches.map((group) => group.letter)), [matches]);
+    const visible = letter ? matches.filter((group) => group.letter === letter) : matches;
 
     return (
         <PageLayout>
@@ -88,15 +58,17 @@ export function Glossary() {
                         spellCheck={false}
                         className="w-full lg:w-[480px]"
                     />
-                    <nav aria-label={indexLabel}>
-                        <ul className="flex flex-wrap gap-2">
-                            {ALPHABET.map((letter) => (
-                                <li key={letter}>
-                                    <GlossaryLetter letter={letter} state={letter === active ? 'active' : letters.includes(letter) ? 'available' : 'empty'} />
-                                </li>
-                            ))}
-                        </ul>
-                    </nav>
+                    <ul aria-label={indexLabel} className="flex flex-wrap gap-2">
+                        {ALPHABET.map((item) => (
+                            <li key={item}>
+                                <GlossaryLetter
+                                    letter={item}
+                                    state={item === letter ? 'active' : available.has(item) ? 'available' : 'empty'}
+                                    onClick={() => setLetter((current) => (current === item ? null : item))}
+                                />
+                            </li>
+                        ))}
+                    </ul>
                 </div>
 
                 <div className="flex w-full flex-col gap-10 md:gap-12 lg:max-w-[960px] lg:gap-14">
@@ -104,7 +76,7 @@ export function Glossary() {
                         <section key={group.letter} aria-labelledby={`letter-${group.letter.toLowerCase()}`} className="flex flex-col gap-2 md:flex-row md:items-start md:gap-10">
                             <h2
                                 id={`letter-${group.letter.toLowerCase()}`}
-                                className="scroll-mt-24 font-display text-[28px] leading-[1.15] font-bold tracking-[-0.02em] text-accent md:w-16 md:shrink-0 md:text-[34px] lg:w-24 lg:text-[40px]"
+                                className="font-display text-[28px] leading-[1.15] font-bold tracking-[-0.02em] text-accent md:w-16 md:shrink-0 md:text-[34px] lg:w-24 lg:text-[40px]"
                             >
                                 {group.letter}
                             </h2>
