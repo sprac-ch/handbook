@@ -40,8 +40,6 @@ An unofficial knowledge base on SPARC, the Cyber Lehrgang and Cyber Bataillon 42
 
 ### Resources
 
-- [Contacts](#)
-- [Further reading](#)
 - [Contribute on GitHub](https://github.com/sprac-ch/handbook)
 
 ### Official sites
