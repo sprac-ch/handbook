@@ -1,6 +1,6 @@
 /* TEAM */
 Team: SPARC Community
-Contact: contact@sprac.ch
+Contact: contact@spr4c.ch
 From: Switzerland
 
 /* PROJECT */

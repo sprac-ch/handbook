@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { getSiteMeta } from '@/content/source';
 import type { Page } from '@/router/pages';
-import { getPageMeta } from './meta';
+import { getPageMeta, ROBOTS_INDEX } from './meta';
 
 function upsert<T extends HTMLElement>(selector: string, create: () => T): T {
     const existing = document.head.querySelector<T>(selector);
@@ -21,10 +21,9 @@ function setCanonical(href: string | null) {
     upsert('link[rel="canonical"]', () => Object.assign(document.createElement('link'), { rel: 'canonical' })).href = href;
 }
 
+/** The 404 page is never indexed; every other page keeps the robots meta written at build time. */
 function setNoIndex(noIndex: boolean) {
-    const robots = document.head.querySelector('meta[name="robots"]');
-    if (!noIndex) return robots?.remove();
-    upsert('meta[name="robots"]', () => Object.assign(document.createElement('meta'), { name: 'robots' })).content = 'noindex';
+    upsert('meta[name="robots"]', () => Object.assign(document.createElement('meta'), { name: 'robots' })).content = noIndex ? 'noindex' : ROBOTS_INDEX;
 }
 
 /**

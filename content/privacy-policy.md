@@ -13,18 +13,18 @@ description: Which personal data the SPRAC Handbook processes, why, for how long
 What personal data is processed when you visit SPRAC Handbook, and what your rights are.
 
 - Last updated: 30 October 2026
-- Applies to: sprac.ch
+- Applies to: spr4c.ch
 - Law: Swiss FADP
 
 ## What is this about?
 
-This privacy policy explains how personal data is processed when you visit sprac.ch, email us or contribute in our repository. The Swiss Federal Act on Data Protection (FADP) applies.
+This privacy policy explains how personal data is processed when you visit spr4c.ch, email us or contribute in our repository. The Swiss Federal Act on Data Protection (FADP) applies.
 
 ## Who is responsible?
 
 SPRAC Handbook is an independent, non-commercial, open-source community knowledge project created by members of the SPARC community.
 
-- **Email:** [contact@sprac.ch](mailto:contact@sprac.ch)
+- **Email:** [contact@spr4c.ch](mailto:contact@spr4c.ch)
 
 ## Visiting the website
 
@@ -111,7 +111,7 @@ Under the FADP you have the right to:
 
 **In practice we hold almost nothing about you.** We cannot link server logs to a person, and they are deleted after 30 days anyway. The only data we can actually connect to you are emails you sent us. If you ask, we tell you what we have, which is usually just those emails, and delete them on request.
 
-Send your request to [contact@sprac.ch](mailto:contact@sprac.ch). To make sure we only answer the right person, we reply to the email address the data belongs to. Requests are free of charge and answered as a rule within 30 days.
+Send your request to [contact@spr4c.ch](mailto:contact@spr4c.ch). To make sure we only answer the right person, we reply to the email address the data belongs to. Requests are free of charge and answered as a rule within 30 days.
 
 You can also lodge a complaint with the Federal Data Protection and Information Commissioner (FDPIC).
 

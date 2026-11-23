@@ -1,3 +1,4 @@
+import { execFileSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 import { readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
@@ -6,15 +7,30 @@ import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import { build, defineConfig, type Plugin } from 'vite';
 import { buildSiteMeta } from './src/content/siteMeta.ts';
-import { PAGES, pagePath } from './src/router/pages.ts';
-import { getPageMeta, renderHeadTags, renderSitemap } from './src/seo/meta.ts';
+import { contentName, PAGES, pagePath, type Page } from './src/router/pages.ts';
+import { getPageMeta, pageGraph, renderHeadTags, renderLlms, renderLlmsFull, renderRobots, renderSitemap } from './src/seo/meta.ts';
+
+/** Text of `content/<name>.md`. */
+const readContent = (name: string) => readFileSync(path.resolve(import.meta.dirname, 'content', `${name}.md`), 'utf8');
 
 /** Site name and the title and description of every page: the front matter of the files in content/. */
-const siteMeta = buildSiteMeta((name) => readFileSync(path.resolve(import.meta.dirname, 'content', `${name}.md`), 'utf8'));
+const siteMeta = buildSiteMeta(readContent);
+
+const today = new Date().toISOString().slice(0, 10);
+
+/** Day the page's content file was last committed (YYYY-MM-DD), for the sitemap. Today when git has no answer (uncommitted file, no git). */
+function lastModified(page: Page): string {
+    try {
+        const date = execFileSync('git', ['log', '-1', '--format=%cs', '--', `content/${contentName(page)}.md`], { cwd: import.meta.dirname, encoding: 'utf8' }).trim();
+        return date || today;
+    } catch {
+        return today;
+    }
+}
 
 const basePath = (process.env.BASE_PATH ?? '').replace(/^\/+|\/+$/g, ''); // remove leading and trailing slash
 const BASE = basePath ? `/${basePath}/` : '/'; // add them safely
-const SITE_URL = `${(process.env.SITE_ORIGIN ?? 'https://sprac.ch').replace(/\/+$/, '')}${BASE.slice(0, -1)}`; // builds the "real" site url
+const SITE_URL = `${(process.env.SITE_ORIGIN ?? 'https://spr4c.ch').replace(/\/+$/, '')}${BASE.slice(0, -1)}`; // builds the "real" site url
 
 // fix possible issues in browsers when builders tweak (and used in meta.ts)
 const define = { __SITE_URL__: JSON.stringify(SITE_URL) };
@@ -75,10 +91,11 @@ function seoPages(): Plugin {
 
             for (const page of PAGES.filter((key) => key !== 'home')) {
                 const pathname = pagePath(page);
-                this.emitFile({ type: 'asset', fileName: `${pathname.slice(1)}index.html`, source: render(renderHeadTags(siteMeta, getPageMeta(siteMeta, page)), prerenderSlot(`${BASE}${pathname.slice(1)}`)) });
+                const head = renderHeadTags(siteMeta, getPageMeta(siteMeta, page), pageGraph(page, readContent));
+                this.emitFile({ type: 'asset', fileName: `${pathname.slice(1)}index.html`, source: render(head, prerenderSlot(`${BASE}${pathname.slice(1)}`)) });
             }
 
-            index.source = render(renderHeadTags(siteMeta, getPageMeta(siteMeta, 'home')), prerenderSlot(BASE));
+            index.source = render(renderHeadTags(siteMeta, getPageMeta(siteMeta, 'home'), pageGraph('home', readContent)), prerenderSlot(BASE));
 
             this.emitFile({
                 type: 'asset',
@@ -86,7 +103,11 @@ function seoPages(): Plugin {
                 source: render(`<title>${siteMeta.notFoundTitle} · ${siteMeta.siteName}</title>\n        <meta name="robots" content="noindex" />`),
             });
 
-            this.emitFile({ type: 'asset', fileName: 'sitemap.xml', source: renderSitemap(new Date().toISOString().slice(0, 10)) });
+            // Crawler files, generated so their addresses and page lists always match the build.
+            this.emitFile({ type: 'asset', fileName: 'sitemap.xml', source: renderSitemap(lastModified) });
+            this.emitFile({ type: 'asset', fileName: 'robots.txt', source: renderRobots() });
+            this.emitFile({ type: 'asset', fileName: 'llms.txt', source: renderLlms(siteMeta, readContent) });
+            this.emitFile({ type: 'asset', fileName: 'llms-full.txt', source: renderLlmsFull(siteMeta, readContent) });
         },
     };
 }

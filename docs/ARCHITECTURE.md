@@ -39,11 +39,11 @@ flowchart TD
 | `content/`               | All page text and the paths of icons and logos, one Markdown file per page (see [CONTENT.md](CONTENT.md))                               |
 | `src/content/`           | Reads the Markdown files: parser (`markdown.ts`), one reader per page (`program.ts` is shared by SPARC, CyLG and Cy Bat 42), page titles (`siteMeta.ts`) |
 | `src/router/`            | Route table (`pages.ts`), URL helpers (`routes.ts`), history navigation and `Link`                                                      |
-| `src/seo/`               | Head tags, JSON-LD and sitemap (`meta.ts`); keeps them in sync in the browser (`usePageMeta.ts`)                                        |
+| `src/seo/`               | Head tags, JSON-LD, sitemap, `robots.txt`, `llms.txt` and `llms-full.txt` (`meta.ts`); keeps the head in sync in the browser (`usePageMeta.ts`) |
 | `src/config/`            | Repository address, asset URLs and icon names                                                                                           |
 | `src/entry-server.ts`    | Renders one path to HTML at build time                                                                                                  |
 | `vite.config.ts`         | Build plugins: CSP, per-page HTML files, sitemap, pre-rendering                                                                         |
-| `public/`                | Served unchanged: favicons, icons, logos, social image, `robots.txt`, `llms.txt`, `humans.txt`, `.htaccess`, `.well-known/security.txt` |
+| `public/`                | Served unchanged: favicons, icons, logos, social image, `humans.txt`, `.htaccess`, `.well-known/security.txt` |
 
 ## Routing
 
@@ -73,7 +73,13 @@ The site is English only. All page text lives in Markdown files in `content/`, n
 `npm run build` runs `tsc -b` and then `vite build`, which adds four steps through plugins in `vite.config.ts`:
 
 1. **Content Security Policy**: a strict same-origin CSP is injected as a `<meta>` tag into every page (build only, because the dev server needs inline styles).
-2. **Per-page HTML** (`seoPages`): for every page, a copy of `index.html` with its own title, description, canonical URL, Open Graph tags and JSON-LD, written to `<page>/index.html`. Also writes `404.html` (with `noindex`) and `sitemap.xml`.
+2. **Per-page HTML** (`seoPages`): for every page, a copy of `index.html` with its own title, description, canonical URL, Open Graph tags and JSON-LD, written to `<page>/index.html`. Also writes `404.html` (with `noindex`) and the crawler files:
+   - `sitemap.xml`: every page, with the day its content file was last committed as `lastmod`.
+   - `robots.txt`: allows every crawler and points to the sitemap.
+   - `llms.txt` ([llmstxt.org](https://llmstxt.org)): every page with its title and description, the official sources from the footer of `content/site.md`, and links to the sitemap and source.
+   - `llms-full.txt`: the content of every page as Markdown, with absolute links, for language models.
+
+   Every page's JSON-LD has the organisation, the site and the page; pages other than the homepage add a breadcrumb, and the glossary adds a `DefinedTermSet` with every term. All pages carry `robots: index, follow, max-image-preview:large, max-snippet:-1`.
 3. **Pre-rendering** (`prerender`): builds `src/entry-server.ts` for Node, renders each page to HTML and puts it into its file. The text is then readable without JavaScript, which matters for AI crawlers.
 4. **Hydration**: in the browser, `main.tsx` compares `data-prerendered` on the root element with the current path. If they match, React hydrates the existing HTML; on `404.html` or in development it renders from scratch.
 
@@ -86,7 +92,7 @@ The site can be served from a subpath. Two environment variables, read in `vite.
 | Variable      | Default            | Effect                                                                                                                                                                                                   |
 | ------------- | ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `BASE_PATH`   | `/`                | Subpath the site is served from, e.g. `/handbook`. Becomes Vite's `base`, so asset URLs, `import.meta.env.BASE_URL` (used by `buildPath` and `publicUrl`) and `%BASE_URL%` in `index.html` include it. |
-| `SITE_ORIGIN` | `https://sprac.ch` | Origin for canonical, Open Graph, JSON-LD and sitemap URLs; the base path is appended.                                                                                                                   |
+| `SITE_ORIGIN` | `https://spr4c.ch` | Origin for canonical, Open Graph, JSON-LD and sitemap URLs; the base path is appended.                                                                                                                   |
 
 Internal links always go through `buildPath` and public files through `asset`, **never hard-code `/...` paths**.
 
@@ -98,7 +104,7 @@ Internal links always go through `buildPath` and public files through `asset`, *
 
 The site is hosted by Infomaniak (Apache). `public/.htaccess` is copied into `dist/` and:
 
-- redirects HTTP and `www.sprac.ch` to `https://sprac.ch`
+- redirects HTTP and `www.spr4c.ch` to `https://spr4c.ch`
 - serves `404.html` for unknown paths
 - sets the headers a `<meta>` tag cannot: HSTS, `frame-ancestors 'none'`, `X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`, `Cross-Origin-Opener-Policy`
 - caches hashed build files for a year and revalidates HTML and text files on every visit
@@ -107,7 +113,7 @@ Security contact details are in `public/.well-known/security.txt` (RFC 9116).
 
 ## Known limitations
 
-- sprac.ch does not serve the site yet and its HTTPS certificate is self-signed.
+- spr4c.ch does not serve the site yet and its HTTPS certificate is self-signed.
 - The "Open an issue" button points to `#` until an issue tracker is set up (`ISSUE_URL` in `src/config/links.ts`).
 - The full-site navbar (Programs, Path, FAQ) is not built yet, because those pages do not exist yet.
 - Romansh text and the legal texts in German, French, Italian and Romansh still need review by native speakers.

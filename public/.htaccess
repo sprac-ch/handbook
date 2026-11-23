@@ -1,16 +1,16 @@
-# Apache config for the Infomaniak hosting of sprac.ch. Copied into dist/ by Vite.
+# Apache config for the Infomaniak hosting of spr4c.ch. Copied into dist/ by Vite.
 
 Options -Indexes
 DirectoryIndex index.html
 ErrorDocument 404 /404.html
 
 # HTTPS only, on the canonical host. The target is fixed rather than taken from the
-# client-supplied Host header, and www.sprac.ch is folded into sprac.ch.
+# client-supplied Host header, and www.spr4c.ch is folded into spr4c.ch.
 <IfModule mod_rewrite.c>
     RewriteEngine On
     RewriteCond %{HTTPS} !=on [OR]
-    RewriteCond %{HTTP_HOST} !^sprac\.ch$ [NC]
-    RewriteRule ^ https://sprac.ch%{REQUEST_URI} [R=301,L]
+    RewriteCond %{HTTP_HOST} !^spr4c\.ch$ [NC]
+    RewriteRule ^ https://spr4c.ch%{REQUEST_URI} [R=301,L]
 </IfModule>
 
 AddType application/manifest+json .webmanifest

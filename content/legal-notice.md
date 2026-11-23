@@ -17,11 +17,11 @@ Who is behind SPRAC Handbook, how to reach us and what this site is and is not.
 
 ## Who runs this website?
 
-SPRAC Handbook (sprac.ch) is a non-commercial, open-source community project made by students from the SPARC community. It is not a company and not a registered association.
+SPRAC Handbook (spr4c.ch) is a non-commercial, open-source community project made by students from the SPARC community. It is not a company and not a registered association.
 
 ## Contact
 
-- **Email:** [contact@sprac.ch](mailto:contact@sprac.ch)
+- **Email:** [contact@spr4c.ch](mailto:contact@spr4c.ch)
 - **Repository:** [GitHub](https://github.com/sprac-ch/handbook)
 
 For questions, corrections or legal requests, email vo1n. If you spot a mistake in the content, you can also open an issue in the repository.
