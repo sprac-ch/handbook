@@ -16,7 +16,7 @@ type MobileNavProps = {
 };
 
 /**
- * The burger and the menu panel for phones: Programs, then the other links and the Wiki button. One `open` state drives
+ * The burger and the menu panel for phones: Programs, then the other links and the yellow button. One `open` state drives
  * both, see `useMenuMotion`. The panel always exists but is hidden and inert while closed. Escape closes it and puts
  * the focus back on the burger. Content: content/site.md.
  */

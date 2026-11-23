@@ -7,6 +7,7 @@ export const PAGE_PATHS = {
     cybat42: 'cybat42',
     path: 'path',
     glossary: 'glossary',
+    ourPages: 'our-pages',
     legalNotice: 'legal-notice',
     privacyPolicy: 'privacy-policy',
 } as const;

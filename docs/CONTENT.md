@@ -11,6 +11,7 @@ All text of the site, and the paths of the icons and logos it shows, live in Mar
 | `content/cybat42.md`          | Cyber Bataillon 42 page (`/cybat42/`)                              |
 | `content/path.md`             | Path page (`/path/`)                                               |
 | `content/glossary.md`         | Glossary (`/glossary/`)                                            |
+| `content/our-pages.md`        | Our pages (`/our-pages/`)                                          |
 | `content/legal-notice.md`     | Legal notice (`/legal-notice/`)                                    |
 | `content/privacy-policy.md`   | Privacy policy (`/privacy-policy/`)                                |
 | `content/not-found.md`        | The 404 page                                                       |
@@ -118,6 +119,11 @@ Details:
 2. `## Terms`: a table `Term | Full name | Definition`, one row per term. Leave the full name empty for terms that are not abbreviations. Every term must start with a letter from A to Z.
 
 The letter groups are made from the first letter of each term, so you never write them yourself. Inside a group the terms keep the order of the table. The search looks at the term and its full name, not at the definition. A letter in the A to Z row shows only the terms that start with it; letters without terms are greyed out. Every term can be linked to by its name: `[CyLG](/glossary/#cylg)`.
+
+### `our-pages.md`
+
+1. `# Title`: the headline and the lead paragraph.
+2. `## Sites`: one `###` card per site, in the order they are shown. A card is written like a program card on the homepage: a logo from `assets/logos/`, a sentence, a list of `Label: value` facts and the button link on its own line (`[Open git.spr4c.ch ![](assets/icons/arrow-up-right.svg)](https://git.spr4c.ch)`).
 
 ### `home.md`
 

@@ -3,7 +3,7 @@ import { publicUrl } from '@/config/assets';
 import type { ProgramCardContent } from '@/content/home';
 import { Button } from './Button';
 
-/** Program card: mark, name, description, three key facts and a Read more button pinned to the bottom. */
+/** Card: mark, name, description, key facts and a button pinned to the bottom. Used for the programs and for our pages. */
 export function ProgramCard({ name, logo, text, facts, readMore }: ProgramCardContent) {
     return (
         <article className="flex flex-col justify-between rounded-xl border border-line bg-elevated p-6">
@@ -27,7 +27,7 @@ export function ProgramCard({ name, logo, text, facts, readMore }: ProgramCardCo
                 </dl>
             </div>
             <div className="flex">
-                <Button href={readMore.href} variant="secondary" size="s" icon="arrow-right">
+                <Button href={readMore.href} variant="secondary" size="s" icon="arrow-right" iconSrc={readMore.icon}>
                     {readMore.label}
                     <span className="sr-only"> · {name}</span>
                 </Button>

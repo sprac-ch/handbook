@@ -35,7 +35,7 @@ function readSite(): Site {
     const navigation = section(1, 'the "Navigation" section');
     const navItems = at(lists(navigation), 0, FILE, 'the list of navigation links');
     const programsMenu = at(navigation.sections, 0, FILE, 'the programs table under "Navigation"');
-    const button = link(at(navItems, navItems.length - 1, FILE, 'the Wiki button'), FILE);
+    const button = link(at(navItems, navItems.length - 1, FILE, 'the yellow button (last item)'), FILE);
 
     const footer = section(2, 'the "Footer" section');
     const groups = footer.sections.slice(0, 3).map((group) => ({

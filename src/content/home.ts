@@ -1,4 +1,4 @@
-import { images, imageOf, keyValue, lists, paragraphs, quote } from './markdown';
+import { images, imageOf, keyValue, lists, paragraphs, quote, type Section } from './markdown';
 import { at, ContentError, link, tile, type LinkSpec, type Tile } from './read';
 import { readDoc } from './source';
 
@@ -13,6 +13,18 @@ export type Home = {
     programs: { title: string; intro: string; note?: string; cards: ProgramCardContent[] };
     contribute: { title: string; body: string; command: string; buttons: LinkSpec[]; ways: Tile[]; note?: string };
 };
+
+/** A `###` card: a logo, a sentence, a list of `Label: value` facts and a link on its own line (the button). Also used by our-pages.md. */
+export function programCard(card: Section, file: string): ProgramCardContent {
+    const text = paragraphs(card);
+    return {
+        name: card.title,
+        logo: imageOf(at(images(card), 0, file, `the logo of "${card.title}"`).src),
+        text: at(text, 0, file, `the description of "${card.title}"`),
+        facts: at(lists(card), 0, file, `the facts of "${card.title}"`).map((item) => keyValue(item)),
+        readMore: link(at(text, 1, file, `the link of "${card.title}"`), file),
+    };
+}
 
 function readHome(): Home {
     const page = at(readDoc(FILE).root.sections, 0, FILE, 'the page title (# heading)');
@@ -34,16 +46,7 @@ function readHome(): Home {
             title: programs.title,
             intro: at(paragraphs(programs), 0, FILE, 'the programs intro'),
             note: quote(programs),
-            cards: programs.sections.map((card) => {
-                const text = paragraphs(card);
-                return {
-                    name: card.title,
-                    logo: imageOf(at(images(card), 0, FILE, `the logo of "${card.title}"`).src),
-                    text: at(text, 0, FILE, `the description of "${card.title}"`),
-                    facts: at(lists(card), 0, FILE, `the facts of "${card.title}"`).map((item) => keyValue(item)),
-                    readMore: link(at(text, 1, FILE, `the "Read more" link of "${card.title}"`), FILE),
-                };
-            }),
+            cards: programs.sections.map((card) => programCard(card, FILE)),
         },
         contribute: {
             title: contribute.title,

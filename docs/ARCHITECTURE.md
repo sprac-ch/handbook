@@ -57,6 +57,7 @@ Pages use a trailing slash:
 | `/cybat42/`        | Cyber Bataillon 42        |
 | `/path/`           | Path                      |
 | `/glossary/`       | Glossary                  |
+| `/our-pages/`      | Our pages                 |
 | `/legal-notice/`   | Legal notice              |
 | `/privacy-policy/` | Privacy policy            |
 | anything else      | Not found                 |

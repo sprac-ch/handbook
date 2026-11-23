@@ -4,6 +4,7 @@ import { Glossary } from '@/pages/Glossary/Glossary';
 import { Home } from '@/pages/Home/Home';
 import { LegalNotice } from '@/pages/LegalNotice/LegalNotice';
 import { NotFound } from '@/pages/NotFound/NotFound';
+import { OurPages } from '@/pages/OurPages/OurPages';
 import { Path } from '@/pages/Path/Path';
 import { PrivacyPolicy } from '@/pages/PrivacyPolicy/PrivacyPolicy';
 import { Sparc } from '@/pages/Sparc/Sparc';
@@ -24,6 +25,7 @@ export function App() {
             {page === 'cybat42' && <Cybat42 />}
             {page === 'path' && <Path />}
             {page === 'glossary' && <Glossary />}
+            {page === 'ourPages' && <OurPages />}
             {page === 'legalNotice' && <LegalNotice />}
             {page === 'privacyPolicy' && <PrivacyPolicy />}
             {page === 'notFound' && <NotFound />}
