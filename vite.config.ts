@@ -8,7 +8,7 @@ import react from '@vitejs/plugin-react';
 import { build, defineConfig, type Plugin } from 'vite';
 import { buildSiteMeta } from './src/content/siteMeta.ts';
 import { contentName, PAGES, pagePath, type Page } from './src/router/pages.ts';
-import { getPageMeta, pageGraph, renderHeadTags, renderLlms, renderLlmsFull, renderRobots, renderSitemap } from './src/seo/meta.ts';
+import { getPageMeta, pageGraph, renderHeadTags, renderLlms, renderLlmsFull, renderRobots, renderSecurityTxt, renderSitemap } from './src/seo/meta.ts';
 
 /** Text of `content/<name>.md`. */
 const readContent = (name: string) => readFileSync(path.resolve(import.meta.dirname, 'content', `${name}.md`), 'utf8');
@@ -108,6 +108,7 @@ function seoPages(): Plugin {
             this.emitFile({ type: 'asset', fileName: 'robots.txt', source: renderRobots() });
             this.emitFile({ type: 'asset', fileName: 'llms.txt', source: renderLlms(siteMeta, readContent) });
             this.emitFile({ type: 'asset', fileName: 'llms-full.txt', source: renderLlmsFull(siteMeta, readContent) });
+            this.emitFile({ type: 'asset', fileName: '.well-known/security.txt', source: renderSecurityTxt(new Date()) });
         },
     };
 }

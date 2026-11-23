@@ -1,5 +1,5 @@
 // Kept free of path aliases and browser APIs: vite.config.ts imports it at build time.
-import { REPO_URL } from '../config/links.ts';
+import { CONTACT_EMAIL, REPO_URL } from '../config/links.ts';
 import { parseMarkdown, plainText, tables, type Section } from '../content/markdown.ts';
 import type { SiteMeta } from '../content/siteMeta.ts';
 import { PAGES, contentName, pagePath, type Page } from '../router/pages.ts';
@@ -64,6 +64,8 @@ function structuredData(site: SiteMeta, meta: PageMeta, extra: GraphNode[]): str
                 name: 'SPARC Community',
                 url: SITE_URL,
                 logo: `${SITE_URL}${LOGO_PATH}`,
+                email: CONTACT_EMAIL,
+                contactPoint: { '@type': 'ContactPoint', email: CONTACT_EMAIL, contactType: 'customer support', availableLanguage: 'en' },
                 sameAs: [REPO_URL, FORGEJO_URL],
             },
             {
@@ -228,6 +230,8 @@ export function renderLlms(site: SiteMeta, read: ReadContent): string {
         `- [Full content](${siteUrl()}/llms-full.txt): every page of the site as Markdown`,
         `- [Sitemap](${siteUrl()}/sitemap.xml)`,
         `- [Source code](${REPO_URL})`,
+        `- [Security contact](${siteUrl()}/.well-known/security.txt)`,
+        `- Contact: ${CONTACT_EMAIL}`,
         '',
     ].join('\n');
 }
@@ -236,4 +240,22 @@ export function renderLlms(site: SiteMeta, read: ReadContent): string {
 export function renderLlmsFull(site: SiteMeta, read: ReadContent): string {
     const pages = PAGES.map((page) => [`<!-- ${pageUrl(page)} -->`, markdownFor(page, read)].join('\n\n'));
     return [`# ${site.siteName}`, '', `> ${site.pages.home.description}`, '', ...pages.flatMap((text) => ['---', '', text, ''])].join('\n');
+}
+
+/** .well-known/security.txt (RFC 9116). Expires 11 months after the build (the RFC asks for less than a year), so every deploy renews it. */
+export function renderSecurityTxt(built: Date): string {
+    const expires = new Date(built);
+    expires.setUTCMonth(expires.getUTCMonth() + 11);
+
+    return [
+        `# Security contact for ${new URL(siteUrl()).host} (RFC 9116).`,
+        '# Please report vulnerabilities privately to the address below, not in a public issue.',
+        '#',
+        '# Are you just visiting for fun and you are not part of SPARC? Join the program (and the community!): https://sparc-cyberdefence.ch/us/',
+        `Contact: mailto:${CONTACT_EMAIL}`,
+        `Expires: ${expires.toISOString()}`,
+        'Preferred-Languages: en',
+        `Canonical: ${siteUrl()}/.well-known/security.txt`,
+        '',
+    ].join('\n');
 }

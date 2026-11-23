@@ -39,11 +39,11 @@ flowchart TD
 | `content/`               | All page text and the paths of icons and logos, one Markdown file per page (see [CONTENT.md](CONTENT.md))                               |
 | `src/content/`           | Reads the Markdown files: parser (`markdown.ts`), one reader per page (`program.ts` is shared by SPARC, CyLG and Cy Bat 42), page titles (`siteMeta.ts`) |
 | `src/router/`            | Route table (`pages.ts`), URL helpers (`routes.ts`), history navigation and `Link`                                                      |
-| `src/seo/`               | Head tags, JSON-LD, sitemap, `robots.txt`, `llms.txt` and `llms-full.txt` (`meta.ts`); keeps the head in sync in the browser (`usePageMeta.ts`) |
+| `src/seo/`               | Head tags, JSON-LD, sitemap, `robots.txt`, `llms.txt`, `llms-full.txt` and `.well-known/security.txt` (`meta.ts`); keeps the head in sync in the browser (`usePageMeta.ts`) |
 | `src/config/`            | Repository address, asset URLs and icon names                                                                                           |
 | `src/entry-server.ts`    | Renders one path to HTML at build time                                                                                                  |
 | `vite.config.ts`         | Build plugins: CSP, per-page HTML files, sitemap, pre-rendering                                                                         |
-| `public/`                | Served unchanged: favicons, icons, logos, social image, `humans.txt`, `.htaccess`, `.well-known/security.txt` |
+| `public/`                | Served unchanged: favicons, icons, logos, social image, `humans.txt`, `.htaccess` |
 
 ## Routing
 
@@ -78,6 +78,9 @@ The site is English only. All page text lives in Markdown files in `content/`, n
    - `robots.txt`: allows every crawler and points to the sitemap.
    - `llms.txt` ([llmstxt.org](https://llmstxt.org)): every page with its title and description, the official sources from the footer of `content/site.md`, and links to the sitemap and source.
    - `llms-full.txt`: the content of every page as Markdown, with absolute links, for language models.
+   - `.well-known/security.txt` (RFC 9116): the security contact, renewed on every build to expire 11 months later.
+
+   The contact address in these files and in the JSON-LD is `CONTACT_EMAIL` in `src/config/links.ts`.
 
    Every page's JSON-LD has the organisation, the site and the page; pages other than the homepage add a breadcrumb, and the glossary adds a `DefinedTermSet` with every term. All pages carry `robots: index, follow, max-image-preview:large, max-snippet:-1`.
 3. **Pre-rendering** (`prerender`): builds `src/entry-server.ts` for Node, renders each page to HTML and puts it into its file. The text is then readable without JavaScript, which matters for AI crawlers.
@@ -109,7 +112,7 @@ The site is hosted by Infomaniak (Apache). `public/.htaccess` is copied into `di
 - sets the headers a `<meta>` tag cannot: HSTS, `frame-ancestors 'none'`, `X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`, `Cross-Origin-Opener-Policy`
 - caches hashed build files for a year and revalidates HTML and text files on every visit
 
-Security contact details are in `public/.well-known/security.txt` (RFC 9116).
+Security contact details are in `.well-known/security.txt` (RFC 9116), generated at build time.
 
 ## Known limitations
 
