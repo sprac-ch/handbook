@@ -7,7 +7,7 @@ This is a **community-driven project maintained by the SPARC Community** to prov
 >
 > **We are not affiliated with SPARC, Cybat, or CyLg in any official way.** We try our best to provide accurate information, but **we cannot guarantee its completeness or reliability, since the information is constantly changing and being updated.**
 
-**Current version:** v0.1.0 (pre-launch)
+**Current version:** v1.0.0
 
 ## Table of contents
 
@@ -72,12 +72,12 @@ Issues and pull requests are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) fi
 
 ## Acknowledgements
 
-- [@voin-sh](https://github.com/vo1n-sh) | [vo1n](https://threema.id/P4MM574Y) (Technical Lead SPRAC Handbook) for building and desigining the whole website.
+- [vo1n](https://git.spr4c.ch/vo1n) (Maintainer)
 
 ## Contact
 
-- **Threema:** [Join the Community (requires a SPARC Threema ID)](https://threema.id/87YD3CY3?text=Hello%20There,%0AI%20would%20like%20to%20join%20the%20SPARC%20Community!%20I%20herby%20accept%20the%20Community%20rules,%20which%20is%20the%20SPARC%20Code%20of%20Conduct%2E%0ACheers%0A%3Cyour%20hackername,%20and%20questions%20if%20any%3E) | [General Inquiries](https://threema.id/87YD3CY3) | [Technical Lead](https://threema.id/P4MM574Y)
-- **GitHub:** bugs and content suggestions go on the [issue tracker](https://github.com/sprac-ch/handbook/issues).
+- **Threema:** [Join the Community (requires a SPARC Threema ID)](https://threema.id/87YD3CY3?text=Hello%20There,%0AI%20would%20like%20to%20join%20the%20SPARC%20Community!%20I%20herby%20accept%20the%20Community%20rules,%20which%20is%20the%20SPARC%20Code%20of%20Conduct%2E%0ACheers%0A%3Cyour%20hackername,%20and%20questions%20if%20any%3E) | [General Inquiries](https://threema.id/87YD3CY3) | [Contact Maintainer](https://threema.id/P4MM574Y)
+- **GitHub:** bugs and content suggestions go on the [issue tracker](https://git.spr4c.ch/sprac-community/handbook/issues).
 
 ## License
 
