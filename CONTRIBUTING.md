@@ -6,16 +6,10 @@ Thanks for helping with SPRAC Handbook. This file covers who can contribute, set
 
 New contributors need to be verified before they can contribute:
 
-1. Send your GitHub account link to An0n on Threema: [Contact An0n on Threema](https://threema.id/87YD3CY3)
-2. An0n adds you to the contributor team of this repository in the `sprac-ch` organisation.
+1. Ask [Cyb3rpengu](https://git.spr4c.ch/cyb3rpengu) for a Forgejo account on Threema: [Contact Cyb3rpengu on Threema](https://threema.id/H443483J)
+2. Cyb3rpengu adds you to the member team of this organisation.
 
-This is a security measure. It prevents people from impersonating SPARC Community members.
-
-> [!WARNING]
-> Use a burner account for opsec reasons.
->
-> Questions about SPARC should not be discussed here (as in not on GitHub, or any public forum for that matter).
-> Please contact either [SPARC directly](https://sparc-cyberdefence.ch/us/contact/) or, if community-related, [An0n](https://threema.id/87YD3CY3).
+This is a security measure.
 
 ## What you can change
 
@@ -85,7 +79,7 @@ The sitemap, the title in search results and the pre-rendered HTML file are gene
 
 ## AI-assisted contributions
 
-Small AI assistance is fine, for example a suggestion or a fixed typo. The majority of the code you submit must be written by you. This matters because the project may move to Codeberg later, and its Terms of Use ban projects that mostly consist of AI-generated code. The rule covers any generative AI tool, including local models. You are responsible for everything you submit, so read and understand it before you open a pull request.
+[Checkout our AI Policy](https://git.spr4c.ch/sprac-community/legal/src/branch/main/AI_POLICY.md)
 
 ## Commits
 
@@ -138,20 +132,20 @@ Never push directly to `main` or `dev`.
 
 ## Workflow
 
-As a contributor you have write access to this repository, so there is no need to fork it. Work on a branch and never push directly to `main` or `dev`.
+As a member at the SPRAC Organisation you have write access to this repository, so there is no need to fork it. Work on a branch and never push directly to `main` or `dev`.
 
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/sprac-ch/handbook.git
+    git clone https://git.spr4c.ch/sprac-community/handbook
     cd handbook
     ```
 
-2. Make sure your commit identity does not leak personal data. Use your burner account details, for example the GitHub noreply address:
+2. Make sure your commit identity does not leak personal data.
 
     ```bash
     git config user.name "your-burner-username"
-    git config user.email "your-burner-username@users.noreply.github.com"
+    git config user.email "your-burner-username@example.com"
     ```
 
 3. Create a feature branch from an up-to-date `dev`:
@@ -186,7 +180,7 @@ As a contributor you have write access to this repository, so there is no need t
 
 A maintainer reviews the pull request and merges it into `dev`. Later they merge `dev` into `main` for a release. Releases are tagged with semantic versions (`v1.2.3`).
 
-For suggestions, use the [issue tracker](https://github.com/sprac-ch/handbook/issues).
+For suggestions, use the [issue tracker](https://git.spr4c.ch/sprac-community/handbook/issues).
 
 ## Final words
 
